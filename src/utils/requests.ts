@@ -7,13 +7,15 @@ import {
   Employee,
 } from "./types"
 import mockData from "../mock-data.json"
-
-const TRANSACTIONS_PER_PAGE = 5
+import { TransactionPane } from "src/components/Transactions/TransactionPane"
+import { Transactions } from "src/components/Transactions"
 
 const data: { employees: Employee[]; transactions: Transaction[] } = {
   employees: mockData.employees,
   transactions: mockData.transactions,
 }
+
+const TRANSACTIONS_PER_PAGE = 5
 
 export const getEmployees = (): Employee[] => data.employees
 
@@ -24,10 +26,11 @@ export const getTransactionsPaginated = ({
     throw new Error("Page cannot be null")
   }
 
-  const start = page * TRANSACTIONS_PER_PAGE
-  const end = start + TRANSACTIONS_PER_PAGE
+  const init = 0 * TRANSACTIONS_PER_PAGE
+  const add = page * TRANSACTIONS_PER_PAGE
+  const end = add + TRANSACTIONS_PER_PAGE
 
-  if (start > data.transactions.length) {
+  if (add > data.transactions.length) {
     throw new Error(`Invalid page ${page}`)
   }
 
@@ -35,13 +38,13 @@ export const getTransactionsPaginated = ({
 
   return {
     nextPage,
-    data: data.transactions.slice(start, end),
+    data: data.transactions.slice(init, end),
   }
 }
 
 export const getTransactionsByEmployee = ({ employeeId }: RequestByEmployeeParams) => {
   if (!employeeId) {
-    throw new Error("Employee id cannot be empty")
+    return data.transactions.filter((transaction) => transaction.employee)
   }
 
   return data.transactions.filter((transaction) => transaction.employee.id === employeeId)

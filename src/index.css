@@ -92,7 +92,7 @@ hr.RampBreak--l {
 
 .RampInputSelect--dropdown-container {
   display: none;
-  position: fixed;
+  /* remove position: fixed; */
   width: 100%;
   max-width: 700px;
   border: 1px solid var(--color-darker-shade);
@@ -150,6 +150,13 @@ hr.RampBreak--l {
 }
 
 .RampInputCheckbox--input {
+  width: 100%;
+  height: 100%;
+  border-color: var(--color-constructive);
+  color: var(--color-constructive);
+}
+
+.RampInputCheckbox--input:disabled {
   display: none;
 }
 
